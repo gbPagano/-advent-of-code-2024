@@ -83,5 +83,6 @@ fn is_valid_p2(target: usize, curr: usize, numbers: &[usize]) -> bool {
 }
 
 fn concat(a: usize, b: usize) -> usize {
-    (a.to_string() + &b.to_string()).parse::<usize>().unwrap()
+    //(a.to_string() + &b.to_string()).parse::<usize>().unwrap()
+    a * (10usize.pow(b.ilog10() + 1)) + b
 }
