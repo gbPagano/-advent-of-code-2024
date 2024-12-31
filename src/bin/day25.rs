@@ -12,7 +12,7 @@ fn main() {
     part_one(data);
 }
 
-fn get_heights(grid: &Vec<Vec<char>>) -> Vec<usize> {
+fn get_heights(grid: &[Vec<char>]) -> Vec<usize> {
     grid.iter()
         .map(|line| line.iter().filter(|&&x| x == '#').count() - 1)
         .collect()
@@ -41,13 +41,12 @@ fn part_one(data: String) {
             keys.push(get_heights(&grid));
         }
     }
-    
+
     let mut overlaps = 0;
     for l in &locks {
         for k in &keys {
-           overlaps += !l.iter().zip(k).any(|(x, y)| x + y > 5) as u32;
+            overlaps += !l.iter().zip(k).any(|(x, y)| x + y > 5) as u32;
         }
-    
     }
 
     println!("Result part 1: {overlaps}");

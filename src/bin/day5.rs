@@ -44,7 +44,7 @@ fn part_one(data: String) {
     for rule in rules.iter() {
         after_hashmap
             .entry(rule.before)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(rule.after);
     }
 
@@ -98,7 +98,7 @@ fn part_two(data: String) {
     for rule in rules.iter() {
         after_hashmap
             .entry(rule.before)
-            .or_insert_with(Vec::new)
+            .or_default()
             .push(rule.after);
     }
 
@@ -136,7 +136,7 @@ fn part_two(data: String) {
             }
         });
     });
-    
+
     let result: i32 = wrong_pages.iter().map(|page| page[page.len() / 2]).sum();
     println!("Result part 2: {result}");
 }

@@ -51,7 +51,6 @@ fn part_two(data: String) {
         })
         .unzip();
 
-
     let res: i32 = first_items
         .iter()
         .map(|item| item * second_items.iter().filter(|&x| x == item).count() as i32)

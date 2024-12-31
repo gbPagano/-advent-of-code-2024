@@ -33,19 +33,19 @@ fn execute_program(regs: &mut [u64], program: &[u64]) -> Vec<u64> {
         let operand = program[pointer + 1];
 
         match ins {
-            0 => regs[0] >>= combo(&regs, operand),   // adv
-            1 => regs[1] ^= operand,                  // bxl
-            2 => regs[1] = combo(&regs, operand) % 8, // bst
+            0 => regs[0] >>= combo(regs, operand),   // adv
+            1 => regs[1] ^= operand,                 // bxl
+            2 => regs[1] = combo(regs, operand) % 8, // bst
             3 => {
                 if regs[0] != 0 {
                     pointer = operand as usize; // jnz
                     continue;
                 }
             }
-            4 => regs[1] ^= regs[2],                         // bxc
-            5 => output.push(combo(&regs, operand) % 8),     // out
-            6 => regs[1] = regs[0] >> combo(&regs, operand), // bdv
-            7 => regs[2] = regs[0] >> combo(&regs, operand), // cdv
+            4 => regs[1] ^= regs[2],                        // bxc
+            5 => output.push(combo(regs, operand) % 8),     // out
+            6 => regs[1] = regs[0] >> combo(regs, operand), // bdv
+            7 => regs[2] = regs[0] >> combo(regs, operand), // cdv
             _ => unreachable!(),
         }
         pointer += 2;
@@ -99,8 +99,7 @@ fn part_two(data: String) {
         for candidate in candidates {
             for j in 0..8 {
                 let next = candidate << 3 | j;
-                if execute_program(&mut [next, 0, 0], &program)
-                    == program[program.len() - 1 - i as usize..]
+                if execute_program(&mut [next, 0, 0], &program) == program[program.len() - 1 - i..]
                 {
                     next_candidates.push(next);
                 }

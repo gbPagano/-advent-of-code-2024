@@ -58,7 +58,6 @@ fn part_two(data: String) {
     println!("Result part 2: {result}");
 }
 
-
 fn score_trailheads(pos: (usize, usize), grid: &Grid) -> usize {
     let mut seen = HashSet::new();
     let mut queue = VecDeque::new();

@@ -171,6 +171,6 @@ fn part_two(data: String) {
         .iter()
         .map(|region| region.sides * region.area)
         .sum::<u32>();
-    
+
     println!("Result part 2: {result}");
 }

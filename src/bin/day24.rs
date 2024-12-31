@@ -17,16 +17,16 @@ fn main() {
 
 #[derive(Debug, PartialEq)]
 enum Operation {
-    AND,
-    OR,
-    XOR,
+    And,
+    Or,
+    Xor,
 }
 impl Operation {
     fn from_str(input: &str) -> Self {
         match input {
-            "AND" => Self::AND,
-            "OR" => Self::OR,
-            "XOR" => Self::XOR,
+            "AND" => Self::And,
+            "OR" => Self::Or,
+            "XOR" => Self::Xor,
             _ => unreachable!(),
         }
     }
@@ -44,9 +44,9 @@ impl Connection<'_> {
         let x = map.get(self.x)?;
         let y = map.get(self.y)?;
         match self.op {
-            Operation::AND => Some(x & y),
-            Operation::OR => Some(x | y),
-            Operation::XOR => Some(x ^ y),
+            Operation::And => Some(x & y),
+            Operation::Or => Some(x | y),
+            Operation::Xor => Some(x ^ y),
         }
     }
 }
@@ -98,34 +98,31 @@ fn is_xy(conn: &Connection) -> bool {
 }
 
 fn conn_is_valid(conn: &Connection, connections: &VecDeque<Connection>, max_z: &str) -> bool {
-    if conn.z.starts_with("z") && conn.op != Operation::XOR && conn.z != max_z {
-        return false;
-    } else if conn.z == max_z && conn.op != Operation::OR {
-        return false;
-    } else if is_xy(&conn) && conn.z != "z00" && !(conn.x.ends_with("00") && conn.y.ends_with("00"))
+    if (conn.z.starts_with("z") && conn.op != Operation::Xor && conn.z != max_z)
+        || conn.z == max_z && conn.op != Operation::Or
     {
-        if conn.op == Operation::XOR
+        return false;
+    } else if is_xy(conn) && conn.z != "z00" && !(conn.x.ends_with("00") && conn.y.ends_with("00"))
+    {
+        if (conn.op == Operation::Xor
             && connections
                 .iter()
                 .filter(|c| {
-                    [c.x, c.y].contains(&conn.z) && [Operation::XOR, Operation::AND].contains(&c.op)
+                    [c.x, c.y].contains(&conn.z) && [Operation::Xor, Operation::And].contains(&c.op)
                 })
                 .count()
-                != 2
+                != 2)
+            || conn.op == Operation::Or
+            || (conn.op == Operation::And
+                && connections
+                    .iter()
+                    .filter(|c| [c.x, c.y].contains(&conn.z) && c.op == Operation::Or)
+                    .count()
+                    == 0)
         {
-            return false;
-        } else if conn.op == Operation::AND
-            && connections
-                .iter()
-                .filter(|c| [c.x, c.y].contains(&conn.z) && c.op == Operation::OR)
-                .count()
-                == 0
-        {
-            return false;
-        } else if conn.op == Operation::OR {
             return false;
         }
-    } else if !conn.z.starts_with("z") && !is_xy(&conn) && conn.op == Operation::XOR {
+    } else if !conn.z.starts_with("z") && !is_xy(conn) && conn.op == Operation::Xor {
         return false;
     }
     true
@@ -167,12 +164,12 @@ fn part_two(data: String) {
 
     let mut wrongs = Vec::new();
     for conn in &connections {
-        if !conn_is_valid(conn, &connections, &max_z) {
+        if !conn_is_valid(conn, &connections, max_z) {
             wrongs.push(conn.z);
         }
     }
     wrongs.sort();
-    
+
     let result = wrongs.join(",");
     println!("Result part 2: {result}");
 }

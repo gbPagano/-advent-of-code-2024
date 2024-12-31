@@ -32,7 +32,7 @@ fn part_one(data: String) {
     println!("Result part 1: {safe_reports}");
 }
 
-fn is_valid_report(report: &Vec<i32>) -> Result<(), i32> {
+fn is_valid_report(report: &[i32]) -> Result<(), i32> {
     let mut direction = 0;
     for (idx, window) in report.windows(2).enumerate() {
         if let &[a, b] = window {

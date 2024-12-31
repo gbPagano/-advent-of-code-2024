@@ -48,28 +48,24 @@ impl Grid {
         match (self.0[ni as usize][nj as usize], dir) {
             ('#', _) => return None,
             ('O', _) => {
-                if self.make_move((ni, nj), dir).is_none() {
-                    return None;
-                }
+                self.make_move((ni, nj), dir)?;
             }
             ('[', Dir::Up | Dir::Down) => {
                 if self.make_move((ni, nj), dir).is_none()
                     || self.make_move((ni, nj + 1), dir).is_none()
                 {
                     return None;
-                } 
+                }
             }
             (']', Dir::Up | Dir::Down) => {
                 if self.make_move((ni, nj), dir).is_none()
                     || self.make_move((ni, nj - 1), dir).is_none()
                 {
                     return None;
-                } 
+                }
             }
             ('[' | ']', _) => {
-                if self.make_move((ni, nj), dir).is_none() {
-                    return None;
-                }
+                self.make_move((ni, nj), dir)?;
             }
 
             _ => (),

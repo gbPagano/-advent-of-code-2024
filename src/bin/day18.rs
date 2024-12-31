@@ -108,7 +108,7 @@ fn part_two(data: String) {
         grid.0[i][j] = '#';
     }
 
-    'bytes_loop: while let Some((x, y)) = bytes.next() {
+    'bytes_loop: for (x, y) in bytes {
         grid.0[x][y] = '#';
 
         let mut seen = HashSet::new();
@@ -127,7 +127,7 @@ fn part_two(data: String) {
                 seen.insert(next_pos);
             }
         }
-                
+
         println!("Result part 2: {y},{x}");
         break;
     }

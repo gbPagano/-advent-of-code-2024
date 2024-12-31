@@ -126,7 +126,7 @@ fn part_one(data: String) {
             if let Some(val) = path.get(&cheat_pos) {
                 let cheat_result = picoseconds + val + 2;
                 let saved_picoconds = path.get(&start).unwrap() - cheat_result;
-                if saved_picoconds > 0 && saved_picoconds >= 100 {
+                if saved_picoconds >= 100 {
                     result += 1;
                 }
             }
@@ -134,11 +134,7 @@ fn part_one(data: String) {
 
         // continue base path loop
         let next_positions: Vec<_> = grid.get_possible_moves(pos);
-        let next_pos = next_positions
-            .iter()
-            .filter(|&m| !seen.contains(m))
-            .next()
-            .unwrap();
+        let next_pos = next_positions.iter().find(|&m| !seen.contains(m)).unwrap();
 
         pos = *next_pos;
         picoseconds += 1;
@@ -172,9 +168,7 @@ fn part_two(data: String) {
             if let Some(val) = path.get(&cheat_pos) {
                 let cheat_result = picoseconds + val + di.abs() + dj.abs();
                 let saved_picoconds = path.get(&start).unwrap() - cheat_result;
-                if saved_picoconds > 0
-                    && saved_picoconds >= 100
-                {
+                if saved_picoconds >= 100 {
                     result += 1;
                 }
             }
@@ -182,11 +176,7 @@ fn part_two(data: String) {
 
         // continue base path loop
         let next_positions: Vec<_> = grid.get_possible_moves(pos);
-        let next_pos = next_positions
-            .iter()
-            .filter(|&m| !seen.contains(m))
-            .next()
-            .unwrap();
+        let next_pos = next_positions.iter().find(|&m| !seen.contains(m)).unwrap();
 
         pos = *next_pos;
         picoseconds += 1;

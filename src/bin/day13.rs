@@ -44,7 +44,7 @@ fn part_one(data: String) {
         .split("\n\n")
         .map(|block| {
             let captures: Vec<_> = re
-                .find_iter(&block)
+                .find_iter(block)
                 .filter_map(|item| item.as_str().parse::<isize>().ok())
                 .collect();
             Machine {
@@ -56,9 +56,7 @@ fn part_one(data: String) {
                 py: captures[5],
             }
         })
-        .filter_map(|machine| {
-            machine.solve() 
-        })
+        .filter_map(|machine| machine.solve())
         .sum::<isize>();
 
     println!("Result part 1: {result}");
@@ -70,7 +68,7 @@ fn part_two(data: String) {
         .split("\n\n")
         .map(|block| {
             let captures: Vec<_> = re
-                .find_iter(&block)
+                .find_iter(block)
                 .filter_map(|item| item.as_str().parse::<isize>().ok())
                 .collect();
             Machine {
@@ -82,10 +80,8 @@ fn part_two(data: String) {
                 py: captures[5] + 10e12 as isize,
             }
         })
-        .filter_map(|machine| {
-            machine.solve() 
-        })
+        .filter_map(|machine| machine.solve())
         .sum::<isize>();
-    
+
     println!("Result part 2: {result}");
 }

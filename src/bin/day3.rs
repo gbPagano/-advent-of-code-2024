@@ -32,11 +32,15 @@ enum State {
 
 fn part_two(data: String) {
     let re = Regex::new(r"mul\((\d{1,3}),(\d{1,3})\)|do\(\)|don't\(\)").unwrap();
-    let (_, result) = re.captures_iter(&data)
+    let (_, result) = re
+        .captures_iter(&data)
         .fold((State::Do, 0), |(state, x), item| match (&item[0], state) {
             ("don't()", _) => (State::Dont, x),
             ("do()", _) => (State::Do, x),
-            (_, State::Do) => (state, x + (item[1].parse::<i32>().unwrap() * item[2].parse::<i32>().unwrap())),
+            (_, State::Do) => (
+                state,
+                x + (item[1].parse::<i32>().unwrap() * item[2].parse::<i32>().unwrap()),
+            ),
             (_, State::Dont) => (state, x),
         });
 

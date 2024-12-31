@@ -19,7 +19,7 @@ fn is_valid<'a>(design: &'a str, patterns: &Vec<&str>, cache: &mut HashMap<&'a s
         return *val;
     }
 
-    if design.len() == 0 {
+    if design.is_empty() {
         return 1;
     }
     let mut result = 0;

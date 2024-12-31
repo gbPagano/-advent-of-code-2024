@@ -27,7 +27,7 @@ fn part_one(data: String) {
             )
         })
         .collect();
-    
+
     let mut result = 0;
     for (target, numbers) in data {
         if is_valid(target, numbers[0], &numbers[1..]) {
@@ -52,7 +52,7 @@ fn part_two(data: String) {
             )
         })
         .collect();
-    
+
     let mut result = 0;
     for (target, numbers) in data {
         if is_valid_p2(target, numbers[0], &numbers[1..]) {

@@ -160,11 +160,7 @@ fn part_two(data: String) {
     println!("Result part 2: {result}");
 }
 
-fn is_loop(
-    grid: &Vec<Vec<char>>,
-    start_pos: (usize, usize),
-    start_dir: Dir,
-) -> bool {
+fn is_loop(grid: &[Vec<char>], start_pos: (usize, usize), start_dir: Dir) -> bool {
     let (num_lines, num_cols) = (grid.len(), grid[0].len());
     let (mut curr_pos, mut curr_dir) = (start_pos, start_dir);
     let mut seen = HashSet::new();

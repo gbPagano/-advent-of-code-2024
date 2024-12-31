@@ -1,5 +1,5 @@
-use std::collections::HashSet;
 use regex::Regex;
+use std::collections::HashSet;
 use std::fs::File;
 use std::io::Read;
 
@@ -38,7 +38,7 @@ fn part_one(data: String) {
         .lines()
         .map(|line| {
             let nums: Vec<_> = re
-                .find_iter(&line)
+                .find_iter(line)
                 .filter_map(|item| item.as_str().parse::<i32>().ok())
                 .collect();
             Robot {
@@ -70,7 +70,7 @@ fn part_two(data: String) {
         .lines()
         .map(|line| {
             let nums: Vec<_> = re
-                .find_iter(&line)
+                .find_iter(line)
                 .filter_map(|item| item.as_str().parse::<i32>().ok())
                 .collect();
             Robot {
@@ -81,7 +81,7 @@ fn part_two(data: String) {
             }
         })
         .collect();
-    
+
     let mut min_steps = 0;
     loop {
         let mut unique_pos = HashSet::new();
@@ -91,14 +91,13 @@ fn part_two(data: String) {
         }
         min_steps += 1;
         if unique_pos.len() == robots.len() {
-            break
+            break;
         }
     }
-    
 
     let mut final_grid = [[' '; GRID_SIZE.1 as usize]; GRID_SIZE.0 as usize];
     for r in robots {
-        final_grid[r.px as usize][r.py as usize] = '#'; 
+        final_grid[r.px as usize][r.py as usize] = '#';
     }
     for line in final_grid {
         println!("{}", line.iter().collect::<String>());

@@ -74,7 +74,7 @@ trait Keypad {
                 for dir in Dir::ALL_DIRS {
                     let (di, dj) = dir.delta_index();
                     let next_pos = (pos.0 + di, pos.1 + dj);
-                    if let Some(_) = Self::get_value(next_pos) {
+                    if Self::get_value(next_pos).is_some() {
                         queue.push_back((count + 1, next_pos, dirs.clone() + dir.to_str()));
                     }
                 }
@@ -139,21 +139,25 @@ fn compute_length(targets: String, depth: u8, numeric: bool) -> usize {
 }
 
 fn part_one(data: String) {
-    let result :usize= data.lines()
+    let result: usize = data
+        .lines()
         .map(|line| {
             compute_length(line.to_string(), 3, true)
                 * line.trim_end_matches('A').parse::<usize>().unwrap()
-        }).sum();
+        })
+        .sum();
 
     println!("Result part 1: {result}");
 }
 
 fn part_two(data: String) {
-    let result :usize= data.lines()
+    let result: usize = data
+        .lines()
         .map(|line| {
             compute_length(line.to_string(), 26, true)
                 * line.trim_end_matches('A').parse::<usize>().unwrap()
-        }).sum();
+        })
+        .sum();
 
     println!("Result part 2: {result}");
 }
